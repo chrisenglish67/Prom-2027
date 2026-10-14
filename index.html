@@ -1,0 +1,1137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prom 2027: A Night Under the Stars</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700;900&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        navy: {
+                            900: '#060B18',
+                            800: '#0B132B',
+                            700: '#1C2541',
+                            600: '#2A3A5E'
+                        },
+                        gold: {
+                            300: '#FFE57F',
+                            400: '#F4D03F',
+                            500: '#D4AC0D',
+                            600: '#B7950B'
+                        }
+                    },
+                    fontFamily: {
+                        cinzel: ['Cinzel', 'serif'],
+                        sans: ['Plus Jakarta Sans', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body {
+            background-color: #060B18;
+            color: #E2E8F0;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            overflow-x: hidden;
+        }
+
+        .font-cinzel {
+            font-family: 'Cinzel', serif;
+        }
+
+        /* Starry Night Background Canvas Effect */
+        #star-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        /* Glowing Effects */
+        .gold-glow {
+            box-shadow: 0 0 25px rgba(244, 208, 63, 0.25);
+        }
+        .text-glow {
+            text-shadow: 0 0 12px rgba(244, 208, 63, 0.5);
+        }
+
+        /* Ticket Stub styling */
+        .ticket-cutout-left, .ticket-cutout-right {
+            position: absolute;
+            top: 50%;
+            width: 24px;
+            height: 24px;
+            background-color: #0B132B;
+            border-radius: 50%;
+            transform: translateY(-50%);
+        }
+        .ticket-cutout-left { left: -12px; }
+        .ticket-cutout-right { right: -12px; }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #0B132B;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #1C2541;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #F4D03F;
+        }
+    </style>
+</head>
+<body class="relative min-h-screen">
+
+    <!-- Starry Background Canvas -->
+    <canvas id="star-canvas"></canvas>
+
+    <!-- Main Navigation -->
+    <nav class="sticky top-0 z-50 bg-navy-800/90 backdrop-blur-md border-b border-gold-400/20">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-20">
+                <div class="flex items-center space-x-3 cursor-pointer" onclick="scrollToSection('hero')">
+                    <i class="fa-solid fa-star text-gold-400 text-2xl animate-pulse"></i>
+                    <span class="font-cinzel font-bold text-xl sm:text-2xl tracking-wider text-white">PROM <span class="text-gold-400">2027</span></span>
+                </div>
+                
+                <!-- Desktop Nav Links -->
+                <div class="hidden md:flex items-center space-x-1 lg:space-x-4 font-medium text-sm">
+                    <button onclick="scrollToSection('hero')" class="hover:text-gold-400 px-3 py-2 transition-colors">Home</button>
+                    <button onclick="scrollToSection('tickets')" class="hover:text-gold-400 px-3 py-2 transition-colors">Tickets</button>
+                    <button onclick="scrollToSection('dresscode')" class="hover:text-gold-400 px-3 py-2 transition-colors">Dress Code</button>
+                    <button onclick="scrollToSection('schedule')" class="hover:text-gold-400 px-3 py-2 transition-colors">Schedule</button>
+                    <button onclick="scrollToSection('student-hub')" class="hover:text-gold-400 px-3 py-2 transition-colors">Student Hub</button>
+                    <button onclick="scrollToSection('dashboard')" class="bg-gold-400/10 hover:bg-gold-400/20 border border-gold-400/40 text-gold-400 px-4 py-2 rounded-full transition-all text-xs uppercase font-bold tracking-wider">Strategy Hub</button>
+                </div>
+
+                <!-- Mobile Menu Button -->
+                <div class="md:hidden flex items-center">
+                    <button id="mobile-menu-btn" class="text-slate-300 hover:text-white p-2">
+                        <i class="fa-solid fa-bars text-xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile Menu Dropdown -->
+        <div id="mobile-menu" class="hidden md:hidden bg-navy-900 border-b border-gold-400/20 px-4 pt-2 pb-4 space-y-2">
+            <button onclick="scrollToSection('hero')" class="block w-full text-left py-2 hover:text-gold-400">Home</button>
+            <button onclick="scrollToSection('tickets')" class="block w-full text-left py-2 hover:text-gold-400">Tickets</button>
+            <button onclick="scrollToSection('dresscode')" class="block w-full text-left py-2 hover:text-gold-400">Dress Code</button>
+            <button onclick="scrollToSection('schedule')" class="block w-full text-left py-2 hover:text-gold-400">Schedule</button>
+            <button onclick="scrollToSection('student-hub')" class="block w-full text-left py-2 hover:text-gold-400">Student Hub</button>
+            <button onclick="scrollToSection('dashboard')" class="block w-full text-left py-2 text-gold-400 font-bold">Strategy Dashboard</button>
+        </div>
+    </nav>
+
+    <!-- Content Sections Wrapper -->
+    <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-24 py-10">
+
+        <!-- 1. HERO SECTION -->
+        <section id="hero" class="min-h-[80vh] flex flex-col justify-center items-center text-center relative py-12">
+            <div class="inline-flex items-center space-x-2 px-4 py-2 rounded-full bg-navy-700/60 border border-gold-400/30 text-gold-400 mb-6 text-sm tracking-widest uppercase">
+                <i class="fa-solid fa-sparkles"></i>
+                <span>The Senior Class Presents</span>
+                <i class="fa-solid fa-sparkles"></i>
+            </div>
+            
+            <h1 class="font-cinzel text-4xl sm:text-6xl md:text-7xl font-extrabold tracking-tight text-white mb-4 leading-tight">
+                A Night Under The <span class="text-transparent bg-clip-text bg-gradient-to-r from-gold-300 via-gold-400 to-amber-500 text-glow">Stars</span>
+            </h1>
+            
+            <p class="max-w-2xl text-lg sm:text-xl text-slate-300 mb-8 font-light leading-relaxed">
+                Step into a celestial celebration of memories, elegance, and magic. Join us for an unforgettable evening at The Grand Crystal Ballroom.
+            </p>
+
+            <!-- Event Details Pill -->
+            <div class="flex flex-wrap justify-center gap-6 mb-12 text-sm sm:text-base font-medium">
+                <div class="flex items-center space-x-2 bg-navy-800/80 border border-slate-700/80 px-4 py-2 rounded-xl">
+                    <i class="fa-solid fa-calendar-day text-gold-400"></i>
+                    <span>Saturday, March 20, 2027</span>
+                </div>
+                <div class="flex items-center space-x-2 bg-navy-800/80 border border-slate-700/80 px-4 py-2 rounded-xl">
+                    <i class="fa-solid fa-clock text-gold-400"></i>
+                    <span>7:00 PM – 11:00 PM</span>
+                </div>
+                <div class="flex items-center space-x-2 bg-navy-800/80 border border-slate-700/80 px-4 py-2 rounded-xl">
+                    <i class="fa-solid fa-location-dot text-gold-400"></i>
+                    <span>The Grand Crystal Ballroom</span>
+                </div>
+            </div>
+
+            <!-- Countdown Timer -->
+            <div class="w-full max-w-3xl bg-navy-800/60 border border-gold-400/20 backdrop-blur-md rounded-2xl p-6 mb-10 gold-glow">
+                <h3 class="font-cinzel text-gold-400 text-xs sm:text-sm uppercase tracking-widest mb-4">Countdown to Celestial Magic</h3>
+                <div class="grid grid-cols-4 gap-2 sm:gap-6 text-center">
+                    <div class="bg-navy-900/80 p-3 sm:p-4 rounded-xl border border-slate-800">
+                        <span id="cd-days" class="font-cinzel text-2xl sm:text-4xl font-bold text-white block">00</span>
+                        <span class="text-xs text-slate-400 uppercase tracking-wider">Days</span>
+                    </div>
+                    <div class="bg-navy-900/80 p-3 sm:p-4 rounded-xl border border-slate-800">
+                        <span id="cd-hours" class="font-cinzel text-2xl sm:text-4xl font-bold text-white block">00</span>
+                        <span class="text-xs text-slate-400 uppercase tracking-wider">Hours</span>
+                    </div>
+                    <div class="bg-navy-900/80 p-3 sm:p-4 rounded-xl border border-slate-800">
+                        <span id="cd-minutes" class="font-cinzel text-2xl sm:text-4xl font-bold text-white block">00</span>
+                        <span class="text-xs text-slate-400 uppercase tracking-wider">Minutes</span>
+                    </div>
+                    <div class="bg-navy-900/80 p-3 sm:p-4 rounded-xl border border-slate-800">
+                        <span id="cd-seconds" class="font-cinzel text-2xl sm:text-4xl font-bold text-white block">00</span>
+                        <span class="text-xs text-slate-400 uppercase tracking-wider">Seconds</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Call to Actions -->
+            <div class="flex flex-col sm:flex-row items-center justify-center gap-4 w-full sm:w-auto">
+                <button onclick="scrollToSection('tickets')" class="w-full sm:w-auto bg-gradient-to-r from-gold-400 to-gold-500 hover:from-gold-300 hover:to-gold-400 text-navy-900 font-bold px-8 py-4 rounded-xl shadow-lg transition-all transform hover:-translate-y-1 flex items-center justify-center space-x-2">
+                    <i class="fa-solid fa-ticket"></i>
+                    <span>Reserve Tickets Now</span>
+                </button>
+                <button onclick="scrollToSection('dresscode')" class="w-full sm:w-auto bg-navy-700/80 hover:bg-navy-700 text-white border border-slate-600 font-semibold px-8 py-4 rounded-xl transition-all flex items-center justify-center space-x-2">
+                    <i class="fa-solid fa-shirt"></i>
+                    <span>Explore Style Guide</span>
+                </button>
+            </div>
+        </section>
+
+        <!-- 2. TICKETING & CHECKOUT SECTION -->
+        <section id="tickets" class="scroll-mt-24">
+            <div class="text-center mb-12">
+                <h2 class="font-cinzel text-3xl sm:text-4xl font-bold text-white mb-3">Reserve Your Pass</h2>
+                <p class="text-slate-400 max-w-xl mx-auto text-sm sm:text-base">Secure your tier before prices increase. All digital tickets are instantly generated with personalized QR access codes.</p>
+            </div>
+
+            <div class="grid lg:grid-cols-12 gap-8 items-start">
+                <!-- Pricing Tiers (5 Cols) -->
+                <div class="lg:col-span-5 space-y-4">
+                    <!-- Early Bird Tier -->
+                    <div id="tier-early" onclick="selectTier('early')" class="cursor-pointer bg-navy-800/80 border-2 border-gold-400 p-6 rounded-2xl transition-all relative gold-glow">
+                        <span class="absolute -top-3 right-6 bg-gold-400 text-navy-900 font-bold text-xs uppercase px-3 py-1 rounded-full">Save $15 - Limited!</span>
+                        <div class="flex justify-between items-start mb-2">
+                            <div>
+                                <h3 class="font-cinzel text-xl font-bold text-white">Early Bird Ticket</h3>
+                                <p class="text-xs text-gold-400 font-medium">Valid through Nov 30, 2026</p>
+                            </div>
+                            <span class="font-cinzel text-3xl font-extrabold text-gold-400">$45</span>
+                        </div>
+                        <p class="text-sm text-slate-300 mt-2">Includes entry, full catered dessert buffet, souvenir lanyard, and 3 souvenir photo booth prints.</p>
+                        <div class="mt-4 flex items-center text-xs text-gold-400 font-semibold">
+                            <i class="fa-solid fa-circle-check mr-2"></i> Tier Selected
+                        </div>
+                    </div>
+
+                    <!-- Regular Tier -->
+                    <div id="tier-standard" onclick="selectTier('standard')" class="cursor-pointer bg-navy-800/40 border-2 border-slate-800 hover:border-slate-600 p-6 rounded-2xl transition-all">
+                        <div class="flex justify-between items-start mb-2">
+                            <div>
+                                <h3 class="font-cinzel text-xl font-bold text-white">Standard Ticket</h3>
+                                <p class="text-xs text-slate-400">Regular admission starting Dec 1</p>
+                            </div>
+                            <span class="font-cinzel text-3xl font-extrabold text-white">$60</span>
+                        </div>
+                        <p class="text-sm text-slate-400 mt-2">Includes event entry, dessert buffet, and standard photo booth access.</p>
+                        <div class="mt-4 flex items-center text-xs text-slate-500 font-semibold">
+                            <i class="fa-regular fa-circle mr-2"></i> Click to select
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Checkout Form Simulator (7 Cols) -->
+                <div class="lg:col-span-7 bg-navy-800/80 border border-slate-700/60 p-6 sm:p-8 rounded-2xl">
+                    <h3 class="font-cinzel text-xl font-bold text-white mb-6 flex items-center">
+                        <i class="fa-solid fa-user-check text-gold-400 mr-3"></i> Student Registration & Ticket Stub
+                    </h3>
+                    
+                    <form id="ticket-form" onsubmit="generateDigitalTicket(event)" class="space-y-4">
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-xs uppercase font-semibold text-slate-400 mb-1">Full Name</label>
+                                <input type="text" id="student-name" required placeholder="Maya Lin" class="w-full bg-navy-900 border border-slate-700 focus:border-gold-400 rounded-xl p-3 text-white focus:outline-none transition-colors">
+                            </div>
+                            <div>
+                                <label class="block text-xs uppercase font-semibold text-slate-400 mb-1">Student ID #</label>
+                                <input type="text" id="student-id" required placeholder="S-2027982" class="w-full bg-navy-900 border border-slate-700 focus:border-gold-400 rounded-xl p-3 text-white focus:outline-none transition-colors">
+                            </div>
+                        </div>
+
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-xs uppercase font-semibold text-slate-400 mb-1">Grade Level</label>
+                                <select id="student-grade" class="w-full bg-navy-900 border border-slate-700 focus:border-gold-400 rounded-xl p-3 text-white focus:outline-none transition-colors">
+                                    <option value="Senior (Class of 2027)">Senior (Class of 2027)</option>
+                                    <option value="Junior (Guest Pass)">Junior (Guest Pass)</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block text-xs uppercase font-semibold text-slate-400 mb-1">Ticket Quantity</label>
+                                <select id="ticket-qty" onchange="updateTotalCost()" class="w-full bg-navy-900 border border-slate-700 focus:border-gold-400 rounded-xl p-3 text-white focus:outline-none transition-colors">
+                                    <option value="1">1 Ticket</option>
+                                    <option value="2">2 Tickets (+ Guest)</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="pt-4 border-t border-slate-700/60 flex justify-between items-center">
+                            <div>
+                                <span class="text-xs text-slate-400 block uppercase">Total Amount</span>
+                                <span id="total-price-display" class="font-cinzel text-2xl font-bold text-gold-400">$45.00</span>
+                            </div>
+                            <button type="submit" class="bg-gold-400 hover:bg-gold-300 text-navy-900 font-bold px-6 py-3 rounded-xl transition-all shadow-md flex items-center space-x-2">
+                                <i class="fa-solid fa-qrcode"></i>
+                                <span>Generate Digital Ticket</span>
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </section>
+
+        <!-- 3. DRESS CODE & STYLE GUIDE SECTION -->
+        <section id="dresscode" class="scroll-mt-24">
+            <div class="text-center mb-10">
+                <span class="text-gold-400 font-semibold text-xs tracking-widest uppercase block mb-2">Elegance Under the Stars</span>
+                <h2 class="font-cinzel text-3xl sm:text-4xl font-bold text-white mb-3">Dress Code Visual Guide</h2>
+                <p class="text-slate-400 max-w-xl mx-auto text-sm sm:text-base">Prom is a formal black-tie optional event. Please adhere to the guidelines below to ensure smooth entry.</p>
+            </div>
+
+            <!-- Tab Buttons -->
+            <div class="flex justify-center mb-8 border-b border-slate-800">
+                <div class="flex space-x-4">
+                    <button id="tab-btn-formal" onclick="switchDressTab('formal')" class="pb-3 border-b-2 border-gold-400 text-gold-400 font-semibold px-4 transition-all">Approved Formalwear</button>
+                    <button id="tab-btn-guidelines" onclick="switchDressTab('guidelines')" class="pb-3 border-b-2 border-transparent text-slate-400 font-semibold px-4 transition-all hover:text-white">Venue Rules & Info</button>
+                </div>
+            </div>
+
+            <!-- Tab Content: Approved Formalwear -->
+            <div id="tab-formal" class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Formal Item 1 -->
+                <div class="bg-navy-800/60 border border-slate-700/50 rounded-2xl p-6 flex flex-col items-center text-center">
+                    <div class="w-16 h-16 rounded-full bg-gold-400/10 border border-gold-400/30 flex items-center justify-center text-gold-400 text-2xl mb-4">
+                        <i class="fa-solid fa-user-tie"></i>
+                    </div>
+                    <h3 class="font-cinzel font-bold text-lg text-white mb-2">Tuxedos & Suits</h3>
+                    <p class="text-xs text-slate-300 leading-relaxed">Dark or midnight navy suits, tuxedos with dress shirts, dress shoes, and formal ties or bowties are highly encouraged.</p>
+                </div>
+
+                <!-- Formal Item 2 -->
+                <div class="bg-navy-800/60 border border-slate-700/50 rounded-2xl p-6 flex flex-col items-center text-center">
+                    <div class="w-16 h-16 rounded-full bg-gold-400/10 border border-gold-400/30 flex items-center justify-center text-gold-400 text-2xl mb-4">
+                        <i class="fa-solid fa-person-dress"></i>
+                    </div>
+                    <h3 class="font-cinzel font-bold text-lg text-white mb-2">Gowns & Dresses</h3>
+                    <p class="text-xs text-slate-300 leading-relaxed">Floor-length evening gowns or elegant formal cocktail dresses. Metallic, celestial, midnight blue, or shimmering accents fit the theme perfectly!</p>
+                </div>
+
+                <!-- Formal Item 3 -->
+                <div class="bg-navy-800/60 border border-slate-700/50 rounded-2xl p-6 flex flex-col items-center text-center sm:col-span-2 lg:col-span-1">
+                    <div class="w-16 h-16 rounded-full bg-gold-400/10 border border-gold-400/30 flex items-center justify-center text-gold-400 text-2xl mb-4">
+                        <i class="fa-solid fa-gem"></i>
+                    </div>
+                    <h3 class="font-cinzel font-bold text-lg text-white mb-2">Accessories & Details</h3>
+                    <p class="text-xs text-slate-300 leading-relaxed">Formal footwear required (dress shoes, heels, or embellished flats). Corsages, boutonnieres, and star-themed jewelry are welcome.</p>
+                </div>
+            </div>
+
+            <!-- Tab Content: Guidelines -->
+            <div id="tab-guidelines" class="hidden bg-navy-800/60 border border-slate-700/50 rounded-2xl p-6 sm:p-8 space-y-4 max-w-3xl mx-auto">
+                <h3 class="font-cinzel text-lg font-bold text-gold-400 flex items-center">
+                    <i class="fa-solid fa-shield-halved mr-2"></i> Prom Night Dress Code Policy
+                </h3>
+                <ul class="space-y-3 text-sm text-slate-300">
+                    <li class="flex items-start"><i class="fa-solid fa-check text-gold-400 mr-2 mt-1"></i> No athletic wear, denim, casual sneakers, or t-shirts.</li>
+                    <li class="flex items-start"><i class="fa-solid fa-check text-gold-400 mr-2 mt-1"></i> Garments must remain secure and formal throughout entry and photos.</li>
+                    <li class="flex items-start"><i class="fa-solid fa-check text-gold-400 mr-2 mt-1"></i> Guests from other schools must strictly follow the dress code guidelines.</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- 4. SCHEDULE & LOGISTICS -->
+        <section id="schedule" class="scroll-mt-24">
+            <div class="text-center mb-12">
+                <h2 class="font-cinzel text-3xl sm:text-4xl font-bold text-white mb-3">Event Timeline & Venue Details</h2>
+                <p class="text-slate-400 max-w-xl mx-auto text-sm sm:text-base">Plan your evening to make sure you don't miss the Grand Entrance, Prom Court Announcement, or Catering.</p>
+            </div>
+
+            <div class="grid lg:grid-cols-12 gap-8">
+                <!-- Schedule Timeline (7 Cols) -->
+                <div class="lg:col-span-7 space-y-6">
+                    <div class="relative border-l-2 border-gold-400/40 ml-4 pl-6 space-y-8">
+                        <!-- Timeline Item 1 -->
+                        <div class="relative">
+                            <span class="absolute -left-[31px] top-0 w-4 h-4 rounded-full bg-gold-400 ring-4 ring-navy-900"></span>
+                            <span class="text-xs font-bold text-gold-400 uppercase tracking-widest">7:00 PM</span>
+                            <h4 class="font-cinzel font-bold text-lg text-white">Doors Open & Red Carpet Arrivals</h4>
+                            <p class="text-xs text-slate-400 mt-1">Check-in at main lobby. Digital ticket stub scan required. Souvenir photos begin immediately.</p>
+                        </div>
+
+                        <!-- Timeline Item 2 -->
+                        <div class="relative">
+                            <span class="absolute -left-[31px] top-0 w-4 h-4 rounded-full bg-gold-400 ring-4 ring-navy-900"></span>
+                            <span class="text-xs font-bold text-gold-400 uppercase tracking-widest">8:00 PM</span>
+                            <h4 class="font-cinzel font-bold text-lg text-white">Dessert Buffet & Dancing Begins</h4>
+                            <p class="text-xs text-slate-400 mt-1">Grand ballroom opens. Live DJ set starts. Unlimited dessert bar and mocktail station open.</p>
+                        </div>
+
+                        <!-- Timeline Item 3 -->
+                        <div class="relative">
+                            <span class="absolute -left-[31px] top-0 w-4 h-4 rounded-full bg-gold-400 ring-4 ring-navy-900"></span>
+                            <span class="text-xs font-bold text-gold-400 uppercase tracking-widest">9:30 PM</span>
+                            <h4 class="font-cinzel font-bold text-lg text-white">Coronation of Prom Royalty</h4>
+                            <p class="text-xs text-slate-400 mt-1">Crowning of Prom King & Queen under the main star chandelier. Live voting closes at 9:00 PM.</p>
+                        </div>
+
+                        <!-- Timeline Item 4 -->
+                        <div class="relative">
+                            <span class="absolute -left-[31px] top-0 w-4 h-4 rounded-full bg-gold-400 ring-4 ring-navy-900"></span>
+                            <span class="text-xs font-bold text-gold-400 uppercase tracking-widest">11:00 PM</span>
+                            <h4 class="font-cinzel font-bold text-lg text-white">Grand Finale & Departure</h4>
+                            <p class="text-xs text-slate-400 mt-1">Final slow dance and farewell star shower. Souvenir photo collection at exit.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Venue Info Box (5 Cols) -->
+                <div class="lg:col-span-5 bg-navy-800/60 border border-slate-700/60 rounded-2xl p-6 flex flex-col justify-between">
+                    <div>
+                        <h3 class="font-cinzel text-xl font-bold text-white mb-4 flex items-center">
+                            <i class="fa-solid fa-building-columns text-gold-400 mr-3"></i> Venue Information
+                        </h3>
+                        <div class="space-y-4 text-sm text-slate-300">
+                            <div>
+                                <span class="text-xs text-slate-500 uppercase block font-semibold">Location</span>
+                                <span class="font-semibold text-white">The Grand Crystal Ballroom</span>
+                                <p class="text-xs text-slate-400">777 Starlight Boulevard, Suite 100</p>
+                            </div>
+                            <div>
+                                <span class="text-xs text-slate-500 uppercase block font-semibold">Parking & Limo Drop-off</span>
+                                <p class="text-xs text-slate-300">Free valet parking for student drivers. Limo/rideshare drop-off zone located at the East Portico.</p>
+                            </div>
+                            <div>
+                                <span class="text-xs text-slate-500 uppercase block font-semibold">Entry Policy</span>
+                                <p class="text-xs text-slate-300">No re-entry permitted once checked in. School ID card required with digital ticket.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mt-6 pt-6 border-t border-slate-700/60 bg-navy-900/40 p-4 rounded-xl flex items-center space-x-3">
+                        <i class="fa-solid fa-circle-info text-gold-400 text-xl"></i>
+                        <p class="text-xs text-slate-300">Need special accommodation? Contact the Senior Class Advisory Office by March 1st.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 5. STUDENT HUB (SONG REQUESTS & COURT VOTING) -->
+        <section id="student-hub" class="scroll-mt-24">
+            <div class="text-center mb-12">
+                <span class="text-gold-400 font-semibold text-xs tracking-widest uppercase block mb-2">Interactive Lounge</span>
+                <h2 class="font-cinzel text-3xl sm:text-4xl font-bold text-white mb-3">Student Engagement Hub</h2>
+                <p class="text-slate-400 max-w-xl mx-auto text-sm sm:text-base">Shape your prom experience! Request songs for the DJ and cast your vote for Prom Royalty.</p>
+            </div>
+
+            <div class="grid lg:grid-cols-2 gap-8">
+                <!-- Song Requests -->
+                <div class="bg-navy-800/60 border border-slate-700/60 rounded-2xl p-6 sm:p-8">
+                    <h3 class="font-cinzel text-xl font-bold text-white mb-4 flex items-center">
+                        <i class="fa-solid fa-music text-gold-400 mr-3"></i> DJ Song Request Box
+                    </h3>
+                    <form id="song-form" onsubmit="addSongRequest(event)" class="space-y-4 mb-6">
+                        <div class="grid grid-cols-2 gap-3">
+                            <input type="text" id="song-title" required placeholder="Song Title" class="bg-navy-900 border border-slate-700 rounded-xl p-3 text-sm text-white focus:outline-none focus:border-gold-400">
+                            <input type="text" id="song-artist" required placeholder="Artist Name" class="bg-navy-900 border border-slate-700 rounded-xl p-3 text-sm text-white focus:outline-none focus:border-gold-400">
+                        </div>
+                        <button type="submit" class="w-full bg-navy-700 hover:bg-navy-600 border border-gold-400/30 text-gold-400 font-bold py-3 rounded-xl transition-all text-sm">
+                            Submit Song to DJ
+                        </button>
+                    </form>
+
+                    <h4 class="text-xs font-bold uppercase tracking-wider text-slate-400 mb-3">Recent Requests Queue</h4>
+                    <div id="song-queue" class="space-y-2 max-h-48 overflow-y-auto pr-1">
+                        <div class="bg-navy-900/80 p-3 rounded-xl flex justify-between items-center text-xs">
+                            <div>
+                                <span class="font-bold text-white block">Sky Full of Stars</span>
+                                <span class="text-slate-400">Coldplay</span>
+                            </div>
+                            <span class="text-gold-400 font-medium bg-gold-400/10 px-2 py-1 rounded">Approved</span>
+                        </div>
+                        <div class="bg-navy-900/80 p-3 rounded-xl flex justify-between items-center text-xs">
+                            <div>
+                                <span class="font-bold text-white block">Starboy</span>
+                                <span class="text-slate-400">The Weeknd</span>
+                            </div>
+                            <span class="text-gold-400 font-medium bg-gold-400/10 px-2 py-1 rounded">Approved</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Prom Royalty Voting -->
+                <div class="bg-navy-800/60 border border-slate-700/60 rounded-2xl p-6 sm:p-8">
+                    <h3 class="font-cinzel text-xl font-bold text-white mb-2 flex items-center">
+                        <i class="fa-solid fa-crown text-gold-400 mr-3"></i> Prom Court Live Poll
+                    </h3>
+                    <p class="text-xs text-slate-400 mb-6">Cast your vote for Prom Royalty. Live results are updated below.</p>
+
+                    <div id="voting-options" class="space-y-4">
+                        <!-- Nominee 1 -->
+                        <div>
+                            <div class="flex justify-between text-xs font-semibold mb-1">
+                                <span class="text-white">Maya Lin & Marcus Vance</span>
+                                <span id="votes-1" class="text-gold-400">42% (128 votes)</span>
+                            </div>
+                            <div class="w-full bg-navy-900 rounded-full h-3 overflow-hidden border border-slate-700 cursor-pointer" onclick="castVote(1)">
+                                <div id="bar-1" class="bg-gradient-to-r from-gold-500 to-gold-300 h-full rounded-full transition-all duration-500" style="width: 42%;"></div>
+                            </div>
+                        </div>
+
+                        <!-- Nominee 2 -->
+                        <div>
+                            <div class="flex justify-between text-xs font-semibold mb-1">
+                                <span class="text-white">Jordan Rivera & Taylor Brooks</span>
+                                <span id="votes-2" class="text-gold-400">35% (107 votes)</span>
+                            </div>
+                            <div class="w-full bg-navy-900 rounded-full h-3 overflow-hidden border border-slate-700 cursor-pointer" onclick="castVote(2)">
+                                <div id="bar-2" class="bg-gradient-to-r from-gold-500 to-gold-300 h-full rounded-full transition-all duration-500" style="width: 35%;"></div>
+                            </div>
+                        </div>
+
+                        <!-- Nominee 3 -->
+                        <div>
+                            <div class="flex justify-between text-xs font-semibold mb-1">
+                                <span class="text-white">Sam Chen & Alex Patel</span>
+                                <span id="votes-3" class="text-gold-400">23% (70 votes)</span>
+                            </div>
+                            <div class="w-full bg-navy-900 rounded-full h-3 overflow-hidden border border-slate-700 cursor-pointer" onclick="castVote(3)">
+                                <div id="bar-3" class="bg-gradient-to-r from-gold-500 to-gold-300 h-full rounded-full transition-all duration-500" style="width: 23%;"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <p id="vote-status" class="text-xs text-center text-slate-400 mt-4 italic">Click on any bar to register your vote!</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 6. STRATEGY & MARKETING DASHBOARD -->
+        <section id="dashboard" class="scroll-mt-24 pt-8 border-t border-gold-400/20">
+            <div class="flex flex-col md:flex-row md:items-center justify-between mb-8">
+                <div>
+                    <span class="bg-gold-400/10 border border-gold-400/30 text-gold-400 text-xs font-bold uppercase tracking-widest px-3 py-1 rounded-full inline-block mb-2">Campaign Strategy</span>
+                    <h2 class="font-cinzel text-3xl sm:text-4xl font-bold text-white">Strategy & Marketing Dashboard</h2>
+                </div>
+                <p class="text-xs text-slate-400 max-w-xs mt-2 md:mt-0">Integrated strategic planning, budget metrics, and digital marketing roadmap for Prom 2027.</p>
+            </div>
+
+            <!-- Dashboard Sub-Tabs -->
+            <div class="flex flex-wrap gap-2 mb-8 bg-navy-900/80 p-1.5 rounded-xl border border-slate-800">
+                <button onclick="switchStratTab('meta')" id="strat-btn-meta" class="strat-tab-btn active bg-navy-700 text-gold-400 px-4 py-2 rounded-lg text-xs font-bold transition-all">$100 Ad Campaign</button>
+                <button onclick="switchStratTab('pushpull')" id="strat-btn-pushpull" class="strat-tab-btn text-slate-400 hover:text-white px-4 py-2 rounded-lg text-xs font-bold transition-all">Push/Pull & SMART Goals</button>
+                <button onclick="switchStratTab('calendar')" id="strat-btn-calendar" class="strat-tab-btn text-slate-400 hover:text-white px-4 py-2 rounded-lg text-xs font-bold transition-all">2-Week Social Calendar</button>
+                <button onclick="switchStratTab('keywords')" id="strat-btn-keywords" class="strat-tab-btn text-slate-400 hover:text-white px-4 py-2 rounded-lg text-xs font-bold transition-all">Keywords & Search Intent</button>
+                <button onclick="switchStratTab('swot')" id="strat-btn-swot" class="strat-tab-btn text-slate-400 hover:text-white px-4 py-2 rounded-lg text-xs font-bold transition-all">SWOT & Personas</button>
+            </div>
+
+            <!-- STRAT TAB 1: $100 META AD CAMPAIGN -->
+            <div id="strat-meta" class="strat-content space-y-6">
+                <div class="grid grid-cols-2 lg:grid-cols-4 gap-4">
+                    <div class="bg-navy-800/80 p-5 rounded-2xl border border-slate-700">
+                        <span class="text-xs text-slate-400 uppercase font-semibold block">Total Budget</span>
+                        <span class="font-cinzel text-3xl font-bold text-gold-400">$100.00</span>
+                        <span class="text-[10px] text-slate-500 block mt-1">100% Meta / Instagram Ads</span>
+                    </div>
+                    <div class="bg-navy-800/80 p-5 rounded-2xl border border-slate-700">
+                        <span class="text-xs text-slate-400 uppercase font-semibold block">Est. Impressions</span>
+                        <span class="font-cinzel text-3xl font-bold text-white">16,250</span>
+                        <span class="text-[10px] text-emerald-400 block mt-1"><i class="fa-solid fa-arrow-trend-up"></i> $6.15 Avg CPM</span>
+                    </div>
+                    <div class="bg-navy-800/80 p-5 rounded-2xl border border-slate-700">
+                        <span class="text-xs text-slate-400 uppercase font-semibold block">Est. Link Clicks</span>
+                        <span class="font-cinzel text-3xl font-bold text-white">410</span>
+                        <span class="text-[10px] text-gold-400 block mt-1"><i class="fa-solid fa-mouse-pointer"></i> $0.24 Avg CPC</span>
+                    </div>
+                    <div class="bg-navy-800/80 p-5 rounded-2xl border border-slate-700">
+                        <span class="text-xs text-slate-400 uppercase font-semibold block">Est. Ticket Sales</span>
+                        <span class="font-cinzel text-3xl font-bold text-emerald-400">65 Tix</span>
+                        <span class="text-[10px] text-slate-400 block mt-1">$3,250 Revenue Generated</span>
+                    </div>
+                </div>
+
+                <!-- Split Strategy Table -->
+                <div class="bg-navy-800/60 border border-slate-700/60 rounded-2xl p-6 overflow-x-auto">
+                    <h3 class="font-cinzel text-lg font-bold text-white mb-4">Paid Ad Allocation Breakdown ($100 Total)</h3>
+                    <table class="w-full text-left text-xs sm:text-sm">
+                        <thead class="bg-navy-900/80 text-gold-400 font-cinzel">
+                            <tr>
+                                <th class="p-3">Campaign Stage</th>
+                                <th class="p-3">Budget Split</th>
+                                <th class="p-3">Target Persona</th>
+                                <th class="p-3">Creative Focus</th>
+                                <th class="p-3">Est. CPC / CPM</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-slate-800 text-slate-300">
+                            <tr>
+                                <td class="p-3 font-semibold text-white">ToFu (Top of Funnel - Awareness)</td>
+                                <td class="p-3 font-bold text-gold-400">$60.00 (60%)</td>
+                                <td class="p-3">Maya ("Excited Planner")</td>
+                                <td class="p-3">Theme Reveal Video & Early Bird Countdown</td>
+                                <td class="p-3">CPM: $5.00 | CPC: $0.20</td>
+                            </tr>
+                            <tr>
+                                <td class="p-3 font-semibold text-white">BoFu (Bottom of Funnel - Conversion)</td>
+                                <td class="p-3 font-bold text-gold-400">$40.00 (40%)</td>
+                                <td class="p-3">Jordan ("Last-Minute Attendee")</td>
+                                <td class="p-3">"3 Days Left Before Price Increase!" Retargeting</td>
+                                <td class="p-3">CPM: $8.50 | CPC: $0.32</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Ad Copy Variations -->
+                <div class="grid md:grid-cols-2 gap-6">
+                    <div class="bg-navy-800/60 border border-slate-700 p-5 rounded-2xl">
+                        <span class="text-xs font-bold text-gold-400 uppercase tracking-widest block mb-2">Ad Copy A (For Maya - Planning focus)</span>
+                        <p class="text-sm italic text-slate-300 mb-3">"✨ A Night Under the Stars awaits! Early Bird tickets for Prom 2027 are officially live. Lock in your $45 tickets before Nov 30th and start coordinating your outfits with your group! 🎟️💫 #Prom2027 #NightUnderTheStars"</p>
+                        <span class="text-xs text-slate-500">CTA: Claim Early Bird Tickets</span>
+                    </div>
+                    <div class="bg-navy-800/60 border border-slate-700 p-5 rounded-2xl">
+                        <span class="text-xs font-bold text-gold-400 uppercase tracking-widest block mb-2">Ad Copy B (For Jordan - Urgency focus)</span>
+                        <p class="text-sm italic text-slate-300 mb-3">"⚠️ Don't wait until the last minute! Prom ticket prices jump from $45 to $60 this Friday at midnight. Grab your digital ticket stub now in under 60 seconds! ⏳✨"</p>
+                        <span class="text-xs text-slate-500">CTA: Buy Ticket in 1-Click</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- STRAT TAB 2: PUSH/PULL & SMART GOALS -->
+            <div id="strat-pushpull" class="strat-content hidden space-y-6">
+                <div class="grid md:grid-cols-2 gap-6">
+                    <!-- SMART Goals -->
+                    <div class="bg-navy-800/60 border border-slate-700 p-6 rounded-2xl space-y-4">
+                        <h3 class="font-cinzel text-lg font-bold text-gold-400 flex items-center">
+                            <i class="fa-solid fa-bullseye mr-2"></i> SMART Campaign Goals
+                        </h3>
+                        <ul class="space-y-3 text-xs sm:text-sm text-slate-300">
+                            <li class="bg-navy-900/60 p-3 rounded-xl border border-slate-800">
+                                <strong class="text-white block">S - Specific:</strong> Sell out 300 total Prom 2027 tickets (150 Early Bird / 150 Standard).
+                            </li>
+                            <li class="bg-navy-900/60 p-3 rounded-xl border border-slate-800">
+                                <strong class="text-white block">M - Measurable:</strong> Track total ticket sales revenue ($15,750 goal) and website QR stub generations.
+                            </li>
+                            <li class="bg-navy-900/60 p-3 rounded-xl border border-slate-800">
+                                <strong class="text-white block">A - Achievable:</strong> Driven by $100 targeted Meta ads, campus posters, and Instagram countdowns.
+                            </li>
+                            <li class="bg-navy-900/60 p-3 rounded-xl border border-slate-800">
+                                <strong class="text-white block">R - Relevant:</strong> Elevates senior class participation and funds high-quality ballroom decor.
+                            </li>
+                            <li class="bg-navy-900/60 p-3 rounded-xl border border-slate-800">
+                                <strong class="text-white block">T - Time-Bound:</strong> Achieve 50% ticket sell-out by Nov 30 (Early Bird cutoff).
+                            </li>
+                        </ul>
+                    </div>
+
+                    <!-- Push/Pull Strategy -->
+                    <div class="bg-navy-800/60 border border-slate-700 p-6 rounded-2xl space-y-4">
+                        <h3 class="font-cinzel text-lg font-bold text-gold-400 flex items-center">
+                            <i class="fa-solid fa-arrows-split-up-and-left mr-2"></i> Push / Pull Marketing Framework
+                        </h3>
+
+                        <div class="space-y-4 text-xs sm:text-sm">
+                            <div class="bg-navy-900/80 p-4 rounded-xl border border-slate-800">
+                                <h4 class="font-bold text-white text-base mb-1">Push Strategy (Outbound Awareness)</h4>
+                                <p class="text-slate-300 mb-2">Direct outreach to actively inform students and parents about deadlines.</p>
+                                <ul class="list-disc list-inside text-slate-400 space-y-1">
+                                    <li>Morning intercom announcements & cafeteria posters.</li>
+                                    <li>Targeted Meta / Instagram Feed & Story ads.</li>
+                                    <li>Direct email broadcasts via student portal.</li>
+                                </ul>
+                            </div>
+
+                            <div class="bg-navy-900/80 p-4 rounded-xl border border-slate-800">
+                                <h4 class="font-bold text-white text-base mb-1">Pull Strategy (Inbound Engagement)</h4>
+                                <p class="text-slate-300 mb-2">Creating excitement and organic desire for students to visit the website.</p>
+                                <ul class="list-disc list-inside text-slate-400 space-y-1">
+                                    <li>Interactive Song Request portal & Prom Court Voting.</li>
+                                    <li>Interactive Dress Code visual inspiration guide.</li>
+                                    <li>User-generated Instagram Story countdown stickers.</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- STRAT TAB 3: 2-WEEK SOCIAL MEDIA CALENDAR -->
+            <div id="strat-calendar" class="strat-content hidden space-y-4">
+                <div class="bg-navy-800/60 border border-slate-700/60 rounded-2xl p-6 overflow-x-auto">
+                    <h3 class="font-cinzel text-lg font-bold text-white mb-4">2-Week Promotional Content Calendar</h3>
+                    <table class="w-full text-left text-xs sm:text-sm">
+                        <thead class="bg-navy-900 text-gold-400 font-cinzel">
+                            <tr>
+                                <th class="p-3">Day</th>
+                                <th class="p-3">Platform</th>
+                                <th class="p-3">Content Focus</th>
+                                <th class="p-3">Target Persona</th>
+                                <th class="p-3">Call to Action (CTA)</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-slate-800 text-slate-300">
+                            <tr>
+                                <td class="p-3 font-bold text-white">Mon W1</td>
+                                <td class="p-3"><span class="bg-pink-500/10 text-pink-400 px-2 py-0.5 rounded text-xs">Instagram Reel</span></td>
+                                <td class="p-3">Theme Teaser Reveal: "A Night Under the Stars"</td>
+                                <td class="p-3">Maya (Planner)</td>
+                                <td class="p-3">Visit Website to View Theme</td>
+                            </tr>
+                            <tr>
+                                <td class="p-3 font-bold text-white">Wed W1</td>
+                                <td class="p-3"><span class="bg-pink-500/10 text-pink-400 px-2 py-0.5 rounded text-xs">Instagram Carousel</span></td>
+                                <td class="p-3">Dress Code Visual Inspiration Guide</td>
+                                <td class="p-3">Maya (Planner)</td>
+                                <td class="p-3">Save Post & Tag Outfit Group</td>
+                            </tr>
+                            <tr>
+                                <td class="p-3 font-bold text-white">Fri W1</td>
+                                <td class="p-3"><span class="bg-blue-500/10 text-blue-400 px-2 py-0.5 rounded text-xs">Meta Ad + Story</span></td>
+                                <td class="p-3">Early Bird Tickets Drop ($45 vs $60)</td>
+                                <td class="p-3">Both Maya & Jordan</td>
+                                <td class="p-3">Buy Tickets Early & Save $15</td>
+                            </tr>
+                            <tr>
+                                <td class="p-3 font-bold text-white">Tue W2</td>
+                                <td class="p-3"><span class="bg-purple-500/10 text-purple-400 px-2 py-0.5 rounded text-xs">IG Story Poll</span></td>
+                                <td class="p-3">DJ Song Request Voting Teaser</td>
+                                <td class="p-3">Jordan (Attendee)</td>
+                                <td class="p-3">Submit DJ Request on Hub</td>
+                            </tr>
+                            <tr>
+                                <td class="p-3 font-bold text-white">Thu W2</td>
+                                <td class="p-3"><span class="bg-red-500/10 text-red-400 px-2 py-0.5 rounded text-xs">Retargeting Ad</span></td>
+                                <td class="p-3">Urgency: 48 Hours Left for Early Bird Pricing</td>
+                                <td class="p-3">Jordan (Last-Minute)</td>
+                                <td class="p-3">Lock In $45 Ticket Now</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- STRAT TAB 4: KEYWORDS & SEARCH INTENT -->
+            <div id="strat-keywords" class="strat-content hidden space-y-4">
+                <div class="bg-navy-800/60 border border-slate-700/60 rounded-2xl p-6 overflow-x-auto">
+                    <h3 class="font-cinzel text-lg font-bold text-white mb-4">Keyword Strategy & Search Intent Table</h3>
+                    <table class="w-full text-left text-xs sm:text-sm">
+                        <thead class="bg-navy-900 text-gold-400 font-cinzel">
+                            <tr>
+                                <th class="p-3">Keyword Phrase</th>
+                                <th class="p-3">Search Volume / Type</th>
+                                <th class="p-3">Search Intent</th>
+                                <th class="p-3">Target Audience Persona</th>
+                                <th class="p-3">Website Landing Focus</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-slate-800 text-slate-300">
+                            <tr>
+                                <td class="p-3 font-bold text-white">"Prom 2027 tickets buy online"</td>
+                                <td class="p-3 text-gold-400">High / Transactional</td>
+                                <td class="p-3">High Intent to Purchase immediately</td>
+                                <td class="p-3">Maya & Jordan</td>
+                                <td class="p-3">Ticket Checkout Simulator</td>
+                            </tr>
+                            <tr>
+                                <td class="p-3 font-bold text-white">"A Night Under the Stars prom theme dress code"</td>
+                                <td class="p-3 text-gold-400">Medium / Informational</td>
+                                <td class="p-3">Researching appropriate formalwear</td>
+                                <td class="p-3">Maya ("Excited Planner")</td>
+                                <td class="p-3">Dress Code Visual Guide</td>
+                            </tr>
+                            <tr>
+                                <td class="p-3 font-bold text-white">"Prom 2027 schedule and venue ballroom"</td>
+                                <td class="p-3 text-gold-400">Medium / Navigational</td>
+                                <td class="p-3">Checking times, parking, and curfew</td>
+                                <td class="p-3">Parents & Students</td>
+                                <td class="p-3">Event Schedule Timeline</td>
+                            </tr>
+                            <tr>
+                                <td class="p-3 font-bold text-white">"Song requests DJ prom court voting"</td>
+                                <td class="p-3 text-gold-400">High / Engagement</td>
+                                <td class="p-3">Interactive participation</td>
+                                <td class="p-3">Jordan ("Last-Minute Attendee")</td>
+                                <td class="p-3">Student Engagement Hub</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- STRAT TAB 5: SWOT & PERSONAS -->
+            <div id="strat-swot" class="strat-content hidden space-y-6">
+                <!-- Personas -->
+                <div class="grid md:grid-cols-2 gap-6">
+                    <!-- Persona 1 -->
+                    <div class="bg-navy-800/60 border border-slate-700/60 p-6 rounded-2xl">
+                        <div class="flex items-center space-x-4 mb-4">
+                            <div class="w-12 h-12 rounded-full bg-gold-400/20 text-gold-400 flex items-center justify-center font-bold text-xl">M</div>
+                            <div>
+                                <h4 class="font-cinzel font-bold text-white text-lg">Maya — "The Excited Planner"</h4>
+                                <span class="text-xs text-gold-400">Senior Class Officer / Early Buyer</span>
+                            </div>
+                        </div>
+                        <ul class="text-xs text-slate-300 space-y-2">
+                            <li><strong>Goals:</strong> Coordinate matching outfit group, buy tickets early, request favorite songs.</li>
+                            <li><strong>Pain Points:</strong> Worried about ticket price increases and dress code rules clarity.</li>
+                            <li><strong>Strategy:</strong> Target with ToFu Instagram Reels and early-bird discount notifications.</li>
+                        </ul>
+                    </div>
+
+                    <!-- Persona 2 -->
+                    <div class="bg-navy-800/60 border border-slate-700/60 p-6 rounded-2xl">
+                        <div class="flex items-center space-x-4 mb-4">
+                            <div class="w-12 h-12 rounded-full bg-blue-500/20 text-blue-400 flex items-center justify-center font-bold text-xl">J</div>
+                            <div>
+                                <h4 class="font-cinzel font-bold text-white text-lg">Jordan — "The Last-Minute Attendee"</h4>
+                                <span class="text-xs text-slate-400">Senior Student / Quick Buyer</span>
+                            </div>
+                        </div>
+                        <ul class="text-xs text-slate-300 space-y-2">
+                            <li><strong>Goals:</strong> Buy ticket seamlessly in under 60 seconds on mobile without hassle.</li>
+                            <li><strong>Pain Points:</strong> Misses physical announcements; forgets event times and parking rules.</li>
+                            <li><strong>Strategy:</strong> Target with BoFu mobile retargeting ads focusing on urgency & QR ticket stub.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- SWOT Analysis Grid -->
+                <div class="bg-navy-800/60 border border-slate-700 p-6 rounded-2xl">
+                    <h3 class="font-cinzel text-lg font-bold text-gold-400 mb-4 flex items-center">
+                        <i class="fa-solid fa-table-cells-large mr-2"></i> SWOT Analysis
+                    </h3>
+                    <div class="grid sm:grid-cols-2 gap-4 text-xs">
+                        <div class="bg-navy-900/80 p-4 rounded-xl border border-slate-800">
+                            <strong class="text-emerald-400 uppercase tracking-wider block mb-1">Strengths</strong>
+                            <p class="text-slate-300">High thematic appeal ("Night Under the Stars"), automated digital QR ticketing, interactive online DJ request hub.</p>
+                        </div>
+                        <div class="bg-navy-900/80 p-4 rounded-xl border border-slate-800">
+                            <strong class="text-amber-400 uppercase tracking-wider block mb-1">Weaknesses</strong>
+                            <p class="text-slate-300">Strict $100 paid advertising budget limitation requiring hyper-efficient ad conversion.</p>
+                        </div>
+                        <div class="bg-navy-900/80 p-4 rounded-xl border border-slate-800">
+                            <strong class="text-blue-400 uppercase tracking-wider block mb-1">Opportunities</strong>
+                            <p class="text-slate-300">Viral Instagram Story countdown stickers and peer-to-peer voting word of mouth.</p>
+                        </div>
+                        <div class="bg-navy-900/80 p-4 rounded-xl border border-slate-800">
+                            <strong class="text-red-400 uppercase tracking-wider block mb-1">Threats</strong>
+                            <p class="text-slate-300">Last-minute purchasing procrastination leading to venue entry bottlenecking.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </div>
+
+    <!-- FOOTER -->
+    <footer class="mt-20 border-t border-slate-800 bg-navy-900 py-10 text-center text-xs text-slate-500">
+        <div class="max-w-7xl mx-auto px-4 space-y-3">
+            <div class="font-cinzel text-sm text-gold-400 font-bold">PROM 2027 • A NIGHT UNDER THE STARS</div>
+            <p>© 2027 Senior Class Executive Advisory Committee. All Rights Reserved.</p>
+            <p class="text-[10px] text-slate-600">Designed with Tailwind CSS, Interactive JavaScript & FontAwesome Icons.</p>
+        </div>
+    </footer>
+
+    <!-- DIGITAL TICKET MODAL -->
+    <div id="ticket-modal" class="fixed inset-0 bg-black/80 backdrop-blur-md z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-navy-800 border-2 border-gold-400 rounded-3xl max-w-md w-full p-6 relative shadow-2xl gold-glow text-center space-y-6">
+            <button onclick="closeTicketModal()" class="absolute top-4 right-4 text-slate-400 hover:text-white text-xl">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+
+            <div class="inline-block p-3 rounded-full bg-gold-400/10 text-gold-400 text-2xl">
+                <i class="fa-solid fa-sparkles"></i>
+            </div>
+
+            <div>
+                <span class="text-xs font-bold text-gold-400 uppercase tracking-widest block">Official Admission Ticket</span>
+                <h3 class="font-cinzel text-2xl font-bold text-white">A Night Under The Stars</h3>
+            </div>
+
+            <!-- TICKET STUB DESIGN -->
+            <div class="bg-navy-900 border border-gold-400/40 rounded-2xl p-5 relative overflow-hidden text-left space-y-3">
+                <div class="ticket-cutout-left"></div>
+                <div class="ticket-cutout-right"></div>
+
+                <div class="flex justify-between items-start border-b border-slate-800 pb-3">
+                    <div>
+                        <span class="text-[10px] uppercase text-slate-400 block font-semibold">Attendee Name</span>
+                        <span id="stub-name" class="font-bold text-white text-base">Maya Lin</span>
+                    </div>
+                    <div class="text-right">
+                        <span class="text-[10px] uppercase text-slate-400 block font-semibold">Ticket Tier</span>
+                        <span id="stub-tier" class="font-bold text-gold-400 text-sm">Early Bird ($45)</span>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-2 gap-2 text-xs">
+                    <div>
+                        <span class="text-[10px] uppercase text-slate-500 block">Student ID</span>
+                        <span id="stub-id" class="text-slate-200 font-mono">S-2027982</span>
+                    </div>
+                    <div>
+                        <span class="text-[10px] uppercase text-slate-500 block">Grade</span>
+                        <span id="stub-grade" class="text-slate-200">Senior</span>
+                    </div>
+                    <div>
+                        <span class="text-[10px] uppercase text-slate-500 block">Date & Time</span>
+                        <span class="text-slate-200">Mar 20, 2027 • 7:00 PM</span>
+                    </div>
+                    <div>
+                        <span class="text-[10px] uppercase text-slate-500 block">Quantity</span>
+                        <span id="stub-qty" class="text-slate-200">1 Pass</span>
+                    </div>
+                </div>
+
+                <!-- Simulated QR Code -->
+                <div class="pt-3 border-t border-dashed border-slate-700 flex flex-col items-center justify-center space-y-2">
+                    <div class="bg-white p-2 rounded-xl">
+                        <img id="stub-qr" src="https://api.qrserver.com/v1/create-qr-code/?size=100x100&data=PROM2027-VALID" alt="Ticket QR Code" class="w-20 h-20">
+                    </div>
+                    <span class="text-[9px] text-slate-500 font-mono tracking-widest uppercase">SCAN AT MAIN ENTRANCE</span>
+                </div>
+            </div>
+
+            <div class="flex gap-3">
+                <button onclick="window.print()" class="flex-1 bg-navy-700 hover:bg-navy-600 text-white font-bold py-3 rounded-xl transition-all text-xs flex items-center justify-center space-x-2">
+                    <i class="fa-solid fa-print"></i>
+                    <span>Print Ticket</span>
+                </button>
+                <button onclick="closeTicketModal()" class="flex-1 bg-gold-400 hover:bg-gold-300 text-navy-900 font-bold py-3 rounded-xl transition-all text-xs">
+                    Done
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- JAVASCRIPT LOGIC -->
+    <script>
+        // Starry Night Background Animation
+        const canvas = document.getElementById('star-canvas');
+        const ctx = canvas.getContext('2d');
+        let stars = [];
+
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+            initStars();
+        }
+
+        function initStars() {
+            stars = [];
+            const count = Math.floor((canvas.width * canvas.height) / 3000);
+            for (let i = 0; i < count; i++) {
+                stars.push({
+                    x: Math.random() * canvas.width,
+                    y: Math.random() * canvas.height,
+                    radius: Math.random() * 1.5,
+                    alpha: Math.random(),
+                    speed: Math.random() * 0.02 + 0.005
+                });
+            }
+        }
+
+        function animateStars() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            stars.forEach(star => {
+                star.alpha += star.speed;
+                if (star.alpha > 1 || star.alpha < 0) {
+                    star.speed = -star.speed;
+                }
+                ctx.beginPath();
+                ctx.arc(star.x, star.y, star.radius, 0, Math.PI * 2);
+                ctx.fillStyle = `rgba(244, 208, 63, ${Math.max(0, star.alpha)})`;
+                ctx.fill();
+            });
+            requestAnimationFrame(animateStars);
+        }
+
+        window.addEventListener('resize', resizeCanvas);
+        resizeCanvas();
+        animateStars();
+
+        // Mobile Menu Toggle
+        document.getElementById('mobile-menu-btn').addEventListener('click', () => {
+            document.getElementById('mobile-menu').classList.toggle('hidden');
+        });
+
+        // Smooth Scroll Helper
+        function scrollToSection(id) {
+            document.getElementById('mobile-menu').classList.add('hidden');
+            const el = document.getElementById(id);
+            if (el) {
+                el.scrollIntoView({ behavior: 'smooth' });
+            }
+        }
+
+        // Live Countdown Timer (Target: March 20, 2027 at 19:00:00)
+        const promDate = new Date('March 20, 2027 19:00:00').getTime();
+
+        function updateCountdown() {
+            const now = new Date().getTime();
+            const diff = promDate - now;
+
+            if (diff > 0) {
+                const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+
+                document.getElementById('cd-days').innerText = String(days).padStart(2, '0');
+                document.getElementById('cd-hours').innerText = String(hours).padStart(2, '0');
+                document.getElementById('cd-minutes').innerText = String(minutes).padStart(2, '0');
+                document.getElementById('cd-seconds').innerText = String(seconds).padStart(2, '0');
+            }
+        }
+        setInterval(updateCountdown, 1000);
+        updateCountdown();
+
+        // Ticket Tier Selection State
+        let currentTier = 'early';
+        let tierPrices = { early: 45, standard: 60 };
+
+        function selectTier(tier) {
+            currentTier = tier;
+            const earlyEl = document.getElementById('tier-early');
+            const stdEl = document.getElementById('tier-standard');
+
+            if (tier === 'early') {
+                earlyEl.className = 'cursor-pointer bg-navy-800/80 border-2 border-gold-400 p-6 rounded-2xl transition-all relative gold-glow';
+                stdEl.className = 'cursor-pointer bg-navy-800/40 border-2 border-slate-800 hover:border-slate-600 p-6 rounded-2xl transition-all';
+            } else {
+                stdEl.className = 'cursor-pointer bg-navy-800/80 border-2 border-gold-400 p-6 rounded-2xl transition-all relative gold-glow';
+                earlyEl.className = 'cursor-pointer bg-navy-800/40 border-2 border-slate-800 hover:border-slate-600 p-6 rounded-2xl transition-all';
+            }
+            updateTotalCost();
+        }
+
+        function updateTotalCost() {
+            const qty = parseInt(document.getElementById('ticket-qty').value);
+            const price = tierPrices[currentTier] * qty;
+            document.getElementById('total-price-display').innerText = `$${price}.00`;
+        }
+
+        // Digital Ticket Generator Modal
+        function generateDigitalTicket(e) {
+            e.preventDefault();
+            const name = document.getElementById('student-name').value;
+            const id = document.getElementById('student-id').value;
+            const grade = document.getElementById('student-grade').value;
+            const qty = document.getElementById('ticket-qty').value;
+
+            document.getElementById('stub-name').innerText = name;
+            document.getElementById('stub-id').innerText = id;
+            document.getElementById('stub-grade').innerText = grade;
+            document.getElementById('stub-qty').innerText = `${qty} Pass(es)`;
+            document.getElementById('stub-tier').innerText = currentTier === 'early' ? 'Early Bird ($45)' : 'Standard ($60)';
+
+            // Update QR image URL based on student ID
+            document.getElementById('stub-qr').src = `https://api.qrserver.com/v1/create-qr-code/?size=100x100&data=PROM2027-${encodeURIComponent(id)}-${encodeURIComponent(name)}`;
+
+            document.getElementById('ticket-modal').classList.remove('hidden');
+        }
+
+        function closeTicketModal() {
+            document.getElementById('ticket-modal').classList.add('hidden');
+        }
+
+        // Dress Code Tabs Switcher
+        function switchDressTab(tab) {
+            const formalBtn = document.getElementById('tab-btn-formal');
+            const guideBtn = document.getElementById('tab-btn-guidelines');
+            const formalContent = document.getElementById('tab-formal');
+            const guideContent = document.getElementById('tab-guidelines');
+
+            if (tab === 'formal') {
+                formalBtn.className = 'pb-3 border-b-2 border-gold-400 text-gold-400 font-semibold px-4 transition-all';
+                guideBtn.className = 'pb-3 border-b-2 border-transparent text-slate-400 font-semibold px-4 transition-all hover:text-white';
+                formalContent.classList.remove('hidden');
+                guideContent.classList.add('hidden');
+            } else {
+                guideBtn.className = 'pb-3 border-b-2 border-gold-400 text-gold-400 font-semibold px-4 transition-all';
+                formalBtn.className = 'pb-3 border-b-2 border-transparent text-slate-400 font-semibold px-4 transition-all hover:text-white';
+                guideContent.classList.remove('hidden');
+                formalContent.classList.add('hidden');
+            }
+        }
+
+        // DJ Song Request Handler
+        function addSongRequest(e) {
+            e.preventDefault();
+            const title = document.getElementById('song-title').value;
+            const artist = document.getElementById('song-artist').value;
+
+            const queue = document.getElementById('song-queue');
+            const item = document.createElement('div');
+            item.className = 'bg-navy-900/80 p-3 rounded-xl flex justify-between items-center text-xs animate-fade-in';
+            item.innerHTML = `
+                <div>
+                    <span class="font-bold text-white block">${title}</span>
+                    <span class="text-slate-400">${artist}</span>
+                </div>
+                <span class="text-gold-400 font-medium bg-gold-400/10 px-2 py-1 rounded">Submitted</span>
+            `;
+            queue.prepend(item);
+
+            document.getElementById('song-title').value = '';
+            document.getElementById('song-artist').value = '';
+        }
+
+        // Interactive Voting Logic
+        let pollVotes = { 1: 128, 2: 107, 3: 70 };
+
+        function castVote(candidate) {
+            pollVotes[candidate]++;
+            const total = pollVotes[1] + pollVotes[2] + pollVotes[3];
+
+            for (let i = 1; i <= 3; i++) {
+                const pct = Math.round((pollVotes[i] / total) * 100);
+                document.getElementById(`bar-${i}`).style.width = `${pct}%`;
+                document.getElementById(`votes-${i}`).innerText = `${pct}% (${pollVotes[i]} votes)`;
+            }
+
+            document.getElementById('vote-status').innerText = 'Thank you for voting! Your vote has been recorded.';
+            document.getElementById('vote-status').className = 'text-xs text-center text-gold-400 mt-4 font-semibold';
+        }
+
+        // Strategy Dashboard Sub-Tab Switcher
+        function switchStratTab(tabId) {
+            const tabs = ['meta', 'pushpull', 'calendar', 'keywords', 'swot'];
+            tabs.forEach(t => {
+                document.getElementById(`strat-${t}`).classList.add('hidden');
+                const btn = document.getElementById(`strat-btn-${t}`);
+                btn.className = 'strat-tab-btn text-slate-400 hover:text-white px-4 py-2 rounded-lg text-xs font-bold transition-all';
+            });
+
+            document.getElementById(`strat-${tabId}`).classList.remove('hidden');
+            const activeBtn = document.getElementById(`strat-btn-${tabId}`);
+            activeBtn.className = 'strat-tab-btn active bg-navy-700 text-gold-400 px-4 py-2 rounded-lg text-xs font-bold transition-all';
+        }
+    </script>
+</body>
+</html>
